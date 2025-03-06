@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from "qs";
 
 const MANAGEMENT_BASE_URL = process.env.MANAGEMENT_BASE_URL;
 const COOKIE_AUTH_TOKEN = process.env.COOKIE_AUTH_TOKEN;
@@ -20,5 +21,6 @@ const headers = {
 export const apiClient = axios.create({
   baseURL: MANAGEMENT_BASE_URL,
   headers,
-  //   paramsSerializer: params => qs.stringify(params, { encodeValuesOnly: true })
+  paramsSerializer: (params) =>
+    qs.stringify(params, { encodeValuesOnly: true }),
 });

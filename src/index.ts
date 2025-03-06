@@ -30,8 +30,8 @@ const argv = yargs(hideBin(process.argv))
   try {
     const searchResult = await csSearch(legacyUrls);
 
-    console.log("--response", searchResult);
+    console.log("--response", searchResult.length);
   } catch (er) {
-    console.log(er.message);
+    console.log('error:::', er, er.message, JSON.stringify(er.response.data));
   }
 })();
