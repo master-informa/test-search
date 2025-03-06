@@ -5,7 +5,9 @@ const STACK_API_KEY = process.env.STACK_API_KEY;
 const STEP = 20; // 20 is the maximum number of query conditions at once
 
 const defaultParams = {
+  type: "entries",
   skip: 0,
+  limit: 100,
   include_publish_details: true,
   include_unpublished: true,
   include_workflow: true,
@@ -14,11 +16,9 @@ const defaultParams = {
   include_title_field_uid: true,
   include_taxonomies: true,
   include_creator_details: true,
-  type: "entries",
-  limit: 100,
 };
 
-export async function csSearch(urls: string[]): Promise<CSSearchItem[]> {
+export async function csVerifyTargets(urls: string[]): Promise<CSSearchItem[]> {
   urls = Array.from(new Set(urls));
 
   const responseItems: CSSearchItem[] = [];
@@ -27,12 +27,12 @@ export async function csSearch(urls: string[]): Promise<CSSearchItem[]> {
   for (let i = 0; i < urls.length; i += STEP) {
     const chunk = urls.slice(i, Math.min(urls.length, i + STEP));
 
-    const titles = chunk.map((title) => ({ title: { $eq: title } }));
+    const urls2 = chunk.map((url) => ({ url: { $eq: url } }));
 
     let query = {
       $and: [
-        { _content_type_uid: { $eq: "settings_redirects" } },
-        { $or: titles },
+        { _content_type_uid: { $ne: "settings_redirects" } },
+        { $or: urls2 },
       ],
     };
 
