@@ -1,5 +1,5 @@
-import { apiClient } from "./api-client";
-import { CSSearchItem, CSSearchResponse } from "./models/cs-search-response";
+import { apiClient } from "../api-client";
+import { CSSearchItem, CSSearchResponse } from "../models/cs-search-response";
 
 const STACK_API_KEY = process.env.STACK_API_KEY;
 const STEP = 20; // 20 is the maximum number of query conditions at once
